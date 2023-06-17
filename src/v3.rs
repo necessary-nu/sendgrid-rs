@@ -18,7 +18,7 @@ use crate::error::{RequestNotSuccessful, SendgridError, SendgridResult};
 const V3_API_URL: &str = "https://api.sendgrid.com/v3/mail/send";
 
 /// Just a redefinition of a map to store string keys and values.
-pub type SGMap = HashMap<String, String>;
+pub type SGMap = HashMap<String, serde_json::Value>;
 
 /// Used to send a V3 message body.
 #[derive(Clone, Debug)]
@@ -702,9 +702,9 @@ mod tests {
             .add_personalization(
                 Personalization::new(Email::new("to_email@test.com")).add_dynamic_template_data(
                     [
-                        ("Norway".to_string(), "100".to_string()),
-                        ("Denmark".to_string(), "50".to_string()),
-                        ("Iceland".to_string(), "10".to_string()),
+                        ("Norway".to_string(), "100".to_string().into()),
+                        ("Denmark".to_string(), "50".to_string().into()),
+                        ("Iceland".to_string(), "10".to_string().into()),
                     ]
                     .iter()
                     .cloned()
